@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 1: Fundamentos de la Verdad y los Tipos de Realidad</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600"><defs><radialGradient id="grad" cx="50%" cy="50%"><stop offset="0%" stop-color="%23ffffff" stop-opacity="0.1"/><stop offset="100%" stop-color="%23000000" stop-opacity="0.8"/></radialGradient></defs><rect width="1000" height="600" fill="url(%23grad)"/><circle cx="200" cy="150" r="3" fill="%23ffffff" opacity="0.8"/><circle cx="800" cy="100" r="2" fill="%23ffffff" opacity="0.6"/><circle cx="300" cy="400" r="4" fill="%23ffffff" opacity="0.9"/><circle cx="700" cy="500" r="2" fill="%23ffffff" opacity="0.7"/></svg>');
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 5px rgba(255, 107, 107, 0.5)); }
+            to { filter: drop-shadow(0 0 20px rgba(78, 205, 196, 0.5)); }
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            margin: 30px 0;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.6s ease forwards;
+        }
+
+        .section:nth-child(even) {
+            animation-delay: 0.2s;
+        }
+
+        .section:nth-child(odd) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 25px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.8em;
+            margin: 25px 0 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section h3::before {
+            content: '🔷';
+            margin-right: 10px;
+            font-size: 0.8em;
+        }
+
+        .theory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .theory-card {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            padding: 25px;
+            border-radius: 15px;
+            color: #333;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .theory-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .theory-card h4 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            color: #764ba2;
+        }
+
+        .reality-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .reality-card {
+            padding: 30px;
+            border-radius: 20px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .reality-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: inherit;
+            filter: brightness(0.9);
+            z-index: -1;
+        }
+
+        .reality-card:hover {
+            transform: scale(1.05);
+        }
+
+        .physical { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .abstract { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .psychological { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+        .cultural { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+        .transcendental { background: linear-gradient(135deg, #fa709a, #fee140); }
+
+        .reality-card h4 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .reality-card .icon {
+            font-size: 2em;
+            margin-right: 15px;
+        }
+
+        .characteristics {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            backdrop-filter: blur(5px);
+        }
+
+        .examples {
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .apologetic-note {
+            background: rgba(255,255,255,0.3);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            border-left: 5px solid rgba(255,255,255,0.6);
+            backdrop-filter: blur(5px);
+        }
+
+        .apologetic-note::before {
+            content: '✨ Perspectiva Apologética:';
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .activities {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-top: 40px;
+        }
+
+        .activities h3 {
+            font-size: 2em;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .activity-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .activity-item {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .activity-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .activity-item h4 {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: #fecfef;
+        }
+
+        .navigation {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+
+        .interactive-element {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .interactive-element:hover {
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            
+            .reality-types {
+                grid-template-columns: 1fr;
+            }
+            
+            .section {
+                padding: 25px;
+            }
+        }
+    
+/* 📱 Ajustes Responsive para celulares */
+@media (max-width: 480px) {
+    .hero {
+        padding: 60px 15px;
+    }
+
+    .hero h1 {
+        font-size: 1.8em;
+    }
+
+    .hero p {
+        font-size: 1em;
+    }
+
+    .section {
+        padding: 20px;
+    }
+
+    .section h2 {
+        font-size: 1.6em;
+    }
+
+    .section h3 {
+        font-size: 1.2em;
+    }
+
+    .theory-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .reality-types {
+        grid-template-columns: 1fr;
+    }
+
+    .reality-card h4 {
+        font-size: 1.3em;
+    }
+
+    .activities {
+        padding: 20px;
+    }
+
+    .activities h3 {
+        font-size: 1.5em;
+    }
+
+    .activity-list {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-btn {
+        padding: 12px 20px;
+        font-size: 1em;
+    }
+}
+
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>La Verdad y los Tipos de Realidad</h1>
+            <p>Clase 1: Explorando los Fundamentos Filosóficos desde una Perspectiva Apologética</p>
+        </div>
+
+        <div class="section">
+            <h2>🎯 Objetivos de la Clase</h2>
+            <p>En esta primera clase exploraremos los conceptos fundamentales de verdad y realidad desde una perspectiva filosófica que nos prepare para abordar cuestiones apologéticas importantes. Entenderemos cómo diferentes tipos de realidad nos ayudan a comprender mejor la existencia de Dios y responder a objeciones comunes.</p>
+        </div>
+
+        <div class="section">
+            <h2>🤔 ¿Qué es la Verdad?</h2>
+            
+            <h3>Definición Básica</h3>
+            <p>La verdad es uno de los temas centrales en filosofía. En términos simples, la verdad se refiere a <strong>lo que corresponde con la realidad</strong>, lo que realmente es el caso.</p>
+
+            <h3>Teorías de la Verdad</h3>
+            <div class="theory-grid">
+                <div class="theory-card interactive-element">
+                    <h4>📍 Teoría de la Correspondencia</h4>
+                    <p>Una proposición es verdadera si corresponde con la realidad</p>
+                </div>
+                <div class="theory-card interactive-element">
+                    <h4>🧩 Teoría de la Coherencia</h4>
+                    <p>Una proposición es verdadera si es consistente con un sistema coherente de creencias</p>
+                </div>
+                <div class="theory-card interactive-element">
+                    <h4>⚙️ Teoría Pragmática</h4>
+                    <p>Una proposición es verdadera si funciona en la práctica</p>
+                </div>
+            </div>
+
+            <div class="apologetic-note">
+                La existencia de verdad objetiva sugiere que hay aspectos de la realidad que existen independientemente de nuestras opiniones, lo cual es compatible con la existencia de un Dios objetivo.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🌍 Los Cinco Tipos de Realidad</h2>
+            
+            <div class="reality-types">
+                <div class="reality-card physical interactive-element">
+                    <h4><span class="icon">🏔️</span>Realidad Física</h4>
+                    <p><strong>Definición:</strong> El mundo material observable a través de los sentidos</p>
+                    <div class="characteristics">
+                        <strong>Características:</strong> Medible, cuantificable, sujeta a leyes naturales
+                    </div>
+                    <div class="examples">
+                        <strong>Ejemplos:</strong> Montañas, océanos, el cuerpo humano, el cosmos
+                    </div>
+                    <div class="apologetic-note">
+                        La complejidad y orden del universo físico sugieren diseño inteligente
+                    </div>
+                </div>
+
+                <div class="reality-card abstract interactive-element">
+                    <h4><span class="icon">🔢</span>Realidad Abstracta</h4>
+                    <p><strong>Definición:</strong> Conceptos que existen pero no son materiales</p>
+                    <div class="characteristics">
+                        <strong>Características:</strong> Inmateriales pero reales, universales
+                    </div>
+                    <div class="examples">
+                        <strong>Ejemplos:</strong> Números, principios lógicos, proposiciones matemáticas
+                    </div>
+                    <div class="apologetic-note">
+                        La existencia de realidades abstractas inmateriales demuestra que no todo lo real es físico, abriendo espacio para lo divino
+                    </div>
+                </div>
+
+                <div class="reality-card psychological interactive-element">
+                    <h4><span class="icon">🧠</span>Realidad Psicológica</h4>
+                    <p><strong>Definición:</strong> El mundo interior de la conciencia, emociones y experiencias mentales</p>
+                    <div class="characteristics">
+                        <strong>Características:</strong> Subjetiva pero real para quien la experimenta
+                    </div>
+                    <div class="examples">
+                        <strong>Ejemplos:</strong> Pensamientos, sentimientos, sueños, experiencias espirituales
+                    </div>
+                    <div class="apologetic-note">
+                        La experiencia religiosa y la conciencia moral son evidencias de una dimensión espiritual del ser humano
+                    </div>
+                </div>
+
+                <div class="reality-card cultural interactive-element">
+                    <h4><span class="icon">🏛️</span>Realidad Cultural</h4>
+                    <p><strong>Definición:</strong> Construcciones sociales históricamente específicas moldeadas por comunidades</p>
+                    <div class="characteristics">
+                        <strong>Características:</strong> Creada por comunidades humanas, variable entre culturas
+                    </div>
+                    <div class="examples">
+                        <strong>Ejemplos:</strong> Lenguaje, tradiciones, instituciones, valores compartidos
+                    </div>
+                    <div class="apologetic-note">
+                        La universalidad de ciertos valores morales y la búsqueda espiritual sugieren una fuente transcultural común
+                    </div>
+                </div>
+
+                <div class="reality-card transcendental interactive-element">
+                    <h4><span class="icon">✨</span>Realidad Trascendental</h4>
+                    <p><strong>Definición:</strong> La realidad que existe más allá del mundo físico y de la experiencia humana ordinaria</p>
+                    <div class="characteristics">
+                        <strong>Características:</strong> Distingue entre apariencias y cosas en sí mismas, entre lo que depende de la mente y lo que no
+                    </div>
+                    <div class="examples">
+                        <strong>Ejemplos:</strong> Dios, lo sagrado, principios morales absolutos, el alma
+                    </div>
+                    <div class="apologetic-note">
+                        Esta dimensión es donde ubicamos a Dios y los valores morales objetivos
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🔗 Interrelación de los Tipos de Realidad</h2>
+            <p>Los diferentes tipos de realidad no existen aislados, sino que se interrelacionan de maneras complejas. La realidad física proporciona el escenario donde se manifiestan las otras realidades, mientras que la realidad trascendental puede influir en todas las demás.</p>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <div style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1)); padding: 30px; border-radius: 20px; border: 2px dashed #667eea;">
+                    <h3 style="color: #667eea; margin-bottom: 20px;">🌐 Sistema Integrado de Realidades</h3>
+                    <p>Física ↔️ Abstracta ↔️ Psicológica ↔️ Cultural ↔️ Trascendental</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="activities">
+            <h3>🎯 Actividades de Clase</h3>
+            <div class="activity-list">
+                <div class="activity-item">
+                    <h4>💬 Debate</h4>
+                    <p>¿Cuál de estos tipos de realidad es más fundamental? Argumenta tu posición con evidencias y razonamiento lógico.</p>
+                </div>
+                <div class="activity-item">
+                    <h4>🔍 Análisis de Casos</h4>
+                    <p>Identificar los diferentes tipos de realidad en situaciones concretas de la vida cotidiana.</p>
+                </div>
+                <div class="activity-item">
+                    <h4>🤔 Reflexión Personal</h4>
+                    <p>¿Qué experiencias personales ilustran cada tipo de realidad? Comparte ejemplos de tu propia vida.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <p style="color: white; font-size: 1.2em; margin-bottom: 20px;">¿Listo para la siguiente clase?</p>
+            <a href="#" class="nav-btn">Ir a Clase 2: Aplicación Apologética 🔜</a>
+        </div>
+    </div>
+
+    <script>
+        // Añadir interactividad
+        document.querySelectorAll('.interactive-element').forEach(element => {
+            element.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+
+        // Efecto de aparición progresiva
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        document.querySelectorAll('.section, .activities').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Efecto de brillo en las tarjetas de realidad
+        document.querySelectorAll('.reality-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 25px 50px rgba(0,0,0,0.3)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = '';
+            });
+        });
+    </script>
+</body>
+</html>
